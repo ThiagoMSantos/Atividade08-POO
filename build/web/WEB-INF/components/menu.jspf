@@ -1,0 +1,33 @@
+
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    if(request.getParameter("LogIn") != null){
+        if(!request.getParameter("userName").isEmpty()){
+            String userName = request.getParameter("userName");
+            session.setAttribute("userName", userName);
+            response.sendRedirect(request.getRequestURI());
+        }else{
+            out.println("Digite seu nome!");
+        }
+    }else if(request.getParameter("LogOut") != null){
+        session.removeAttribute("userName");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+<h1>HttpSession</h1>
+<%if(session.getAttribute("userName") == null) {%>
+    <form>
+        <input name="userName" type="text"/>
+        <input name="LogIn" type="submit" value="LogIn"/>
+    </form>
+<%}else{%>
+    <form>
+        Usuário: <%= session.getAttribute("userName") %>
+        <input name="LogOut" type="submit" value="LogOut"/> |
+        <a href="index.jsp">Index (Principal)</a> |
+        <a href="pagina1.jsp">Página 1 (Inicial Usuário)</a>
+    </form>
+<%} %>
+<hr/>
